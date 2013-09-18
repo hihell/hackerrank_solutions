@@ -43,12 +43,9 @@ def cal_short(string, energy)
 		max01 = [max_0, max_1].max
 		max01 = a.last >= lv ? a.length - 1 : max01	
 		if(max01 >= mid)
-			# curLen =  max01 - i + 1
-
-
 
 			max_len = max_len > max01 - i + 1 ? max_len : max01 - i + 1
-			# puts "max01: #{max01}, i: #{i}, mid: #{mid}"
+			 #puts "max01: #{max01}, i: #{i}, mid: #{mid}"
 			if(string[max01] == '0' and max_len == 1)
 				max_len = 0
 			end
@@ -86,7 +83,7 @@ def cal()
 
 		lm = la.each_with_index.max
 		rm = ra.each_with_index.max
-		# puts "lm:#{lm}, rm:#{rm}"
+		 #puts "lm:#{lm}, rm:#{rm}"
 		
 		totalE = 0
 		totalL = 0
@@ -97,18 +94,18 @@ def cal()
 			totalL += lm[1] + 1
 			remainR = s.slice(lm[1] + 1, s.length)
 		end
-
 		if(rm[0] > 0)
 			totalE += rm[0]
 			totalL += rm[1] + 1
 			remainL = s.slice(0, s.length - rm[1] - 1)
 		end
 
+		#puts "e:#{e}, totalE:#{totalE}"
 		if(e >= 0)
 			return k * s.length
 		elsif(totalE + e >= 0)
 			num = (totalE / e.abs) < (k - 2) ? (totalE / e.abs) : (k - 2)
-			# puts "num: #{num}, totalE: #{totalE}, totalL: #{totalL}"
+			 #puts "num: #{num}, totalE: #{totalE}, totalL: #{totalL}"
 			len = num * s.length + totalL
 			# puts "len: #{len}"
 			remain = totalE + num * e
@@ -116,14 +113,18 @@ def cal()
 			if(remain > 0)		
 				# use the remaining energy to make it longer
 				rest = remainL + '2' + remainR
-				puts "rest: #{rest}, remain: #{remain}"
+				#puts "rest: #{rest}, remain: #{remain}"
 				# the short array passed to function contains 1 pseudo char
 				# remove that from the length 
 				len += cal_short(rest, remain) - 1
 			end
 			return len 
 		else
-			return cal_short(s, 0)
+			if(k >= 2)
+				return cal_short(s+s, 0)
+			else
+				return cal_short(s, 0)
+			end
 		end
 
 	else
@@ -139,9 +140,6 @@ end
 
 def main()
 	puts cal()
-	# s = '02000010000000'
-	# s = '011100000000000000000200000000000000000100000000'
-	# puts cal_short(s, 1)
 end
 
 main()
